@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../data.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -57,10 +58,12 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
         Padding(
-          padding:
-              EdgeInsets.only(top: MediaQuery.of(_context).size.height * 0.03),
+          padding: EdgeInsets.only(
+              top: MediaQuery.of(_context).size.height * 0.03,
+              bottom: MediaQuery.of(_context).size.height * 0.03),
           child: _locationBar(_context),
         ),
+        _articlesList(_context),
       ],
     );
   }
@@ -103,5 +106,59 @@ class _HomePageState extends State<HomePage> {
         }).toList(),
       ),
     );
+  }
+
+  Widget _articlesList(BuildContext _context) {
+    return Expanded(
+      child: ListView.builder(
+        itemCount: articles.length,
+        itemBuilder: (context, index) {
+          return Padding(
+              padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(_context).size.height * 0.05),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(50),
+                child: Container(
+                  height: MediaQuery.of(_context).size.height * 0.30,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: NetworkImage(articles[index].image)),
+                      boxShadow: [
+                        BoxShadow(
+                            color: Colors.black45,
+                            spreadRadius: 2,
+                            blurRadius: 20,
+                            offset: Offset(0, 6))
+                      ]),
+                      child: _articleInfoColum(_context),
+                ),
+              ));
+        },
+      ),
+    );
+  }
+
+  Widget _articleInfoColum(BuildContext _context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisSize: MainAxisSize.max,
+      children: <Widget>[
+        _authorInfoRow(_context),
+      ],
+    )
+  }
+
+  Widget _authorInfoRow(BuildContext _context){
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisSize: MainAxisSize.max,
+      children: <Widget>[
+        
+      ],
+    );
+
   }
 }
